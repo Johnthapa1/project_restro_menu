@@ -16,10 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app_menus import views
+from app_menus import views as menus_views
+from app_customers import views as customer_views
+from app_accounts import views as account_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('menus/', views.list_menu, name='menu-list'),
-    path('menus/add', views.add_menu, name='menu-add')
+    path('menus/', menus_views.list_menu, name='menu-list'),
+    path('menus/add', menus_views.add_menu, name='menu-add'),
+    path('menus/show', menus_views.show_menu, name='menu_show'),
+    path('customers/create', customer_views.create_customer, name='create_customer'),
+    path('customers/edit', customer_views.edit_customer, name='edit_customer'),
+    path('customers/index', customer_views.index_customer, name='index_customer'),
+    path('customers/show', customer_views.show_customer, name='show_customer'),
+    path('accounts/login', account_views.login_accounts, name='account_login')
+    path('accounts/profile', account_views.profile_accounts, name='profile_login')
+    path('accounts/register', account_views.register_accounts, name='register_login')
+
+    
 ]
