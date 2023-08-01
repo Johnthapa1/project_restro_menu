@@ -15,23 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from app_menus import views as menus_views
-from app_customers import views as customer_views
-from app_accounts import views as account_views
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('menus/', menus_views.list_menu, name='menu-list'),
-    path('menus/add', menus_views.add_menu, name='menu-add'),
-    path('menus/show', menus_views.show_menu, name='menu_show'),
-    path('customers/create', customer_views.create_customer, name='create_customer'),
-    path('customers/edit', customer_views.edit_customer, name='edit_customer'),
-    path('customers/index', customer_views.index_customer, name='index_customer'),
-    path('customers/show', customer_views.show_customer, name='show_customer'),
-    path('accounts/login', account_views.login_accounts, name='account_login')
-    path('accounts/profile', account_views.profile_accounts, name='profile_login')
-    path('accounts/register', account_views.register_accounts, name='register_login')
-
-    
+    path('menus/', include('app_menus.urls')),
+    path('', include('app_accounts.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/v1/', include('app_restapi.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

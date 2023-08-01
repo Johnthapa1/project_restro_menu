@@ -1,9 +1,65 @@
 {% extends 'layouts/master.html' %}
 
+{% load static %}
+
 {% block title %}
 MENU | List
 {% endblock %}
 
 {% block content %}
-<h1>This is MENU List page</h1>
+<div class="container">
+    {% include 'partials/_message.html' %}
+    <div class="card p-5 mt-3">
+        <a href="{% url 'menu-add' %}" class="btn btn-sm btn-primary mb-3 mt-3">Add new Menu</a>
+        <dib class="card-header">
+            <h1>Menu List</h1>
+            <hr>
+            <table class="table table-hover mt-3">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Pictures</th>
+                        <th>Action</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    {% for val in page_obj %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ val.menu_title }}</td>
+                        <td>{{ val.menu_price }}</td>
+                        <td>{{ val.menu_category.category_title }}</td>
+                        <td><img src="{{ val.menu_img.url }}" alt="" width="50" height="50"></td>
+                        <td>
+                            <a href="{% url 'menu-show' val.id %}" lass="btn btn-sm btn-primary">Show</a>
+                            <a href="{% url 'menu-edit' val.id %}">Edit</a>
+                            <a href="{% url 'menu-delete' val.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-sharp fa-solid fa-arrow-left"></i></a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+            
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}"><i class="fa-solid fa-arrow-rig ht"></i></a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>   
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'layouts/master.html' %}
+
+{% load static %}
+
+{% block title %}
+RESTRO | Dashboard
+{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card p-5 mt-3">
+        <h1>Dashboard</h1>
+        <button id="btn" onclick="changeText()">Click Me</button>
+        <hr>
+        <div class="d-flex flex-row justify-content-between">
+            <div class="card p-5 w-25">
+                <h5><i class="fa-solid fa-person-military-pointing"></i> Customers</h5>
+                <a href="{% url 'menu-list' %}" class="anchor">View All</a>
+                <span class="count">15</span>
+            </div>
+            <div class="card p-5  w-25">
+                <h5><i class="fa-solid fa-book"></i> Menus</h5>
+                <a href="{% url 'menu-list' %}"  class="anchor" id="anchor">View All</a>
+                <span class="count">{{ menu_total }}</span>
+            </div>
+            <div class="card p-5  w-25">
+                <h5><i class="fa-solid fa-user"></i> Accounts</h5>
+                <a href="{% url 'menu-list' %}" class="anchor" onmouseenter="changeText()">View All</a>
+                <span class="count">15</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
